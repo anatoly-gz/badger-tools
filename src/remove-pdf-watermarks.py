@@ -83,14 +83,15 @@ def _(PIL):
 @app.cell(hide_code=True)
 def _():
     mo.md(r"""
-    # Удаление водяных знаков
+    # Удаление водяных знаков для милых барсучков
     """)
     return
 
 
 @app.cell
 def _():
-    files = mo.ui.file(label='Выбрать файл', filetypes=['.pdf'], kind="button")
+    files = mo.ui.file(label='Выбрать файл', kind="area",
+                       filetypes=['.pdf'], max_size=1_000_000_000)
     files
     return (files,)
 
@@ -99,7 +100,7 @@ def _():
 def _(files, recurring_images):
     mo.stop(not files.value, mo.md(
         'Выберите файл для поиска и удаления водяных знаков'
-    ))
+    ).center())
 
     file = files.value[0]
     doc = Document(stream=file.contents)
@@ -111,7 +112,7 @@ def _(files, recurring_images):
 def _(doc, file, imgs, preview_images, remove_images, remove_links):
     mo.stop(not imgs, mo.md(
         'Водяных знаков не обнаружено'
-    ).callout(kind='warn'))
+    ).callout(kind='warn').center())
 
     previews = preview_images(doc, imgs)
     remove_images(doc, imgs)
@@ -121,7 +122,7 @@ def _(doc, file, imgs, preview_images, remove_images, remove_links):
         mo.md(f'На каждом листе обнаружены и удалены водяные знаки:').callout(kind='success'),
         mo.hstack(previews.values()),
         mo.download(label='Скачать результат', data=doc.tobytes, filename=file.name),
-    ], align='start', gap=1)
+    ], align='center', gap=3)
     return
 
 
