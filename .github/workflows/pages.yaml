@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.4.0
       - run: make export-all
       - uses: actions/upload-pages-artifact@v5
         with: { path: pages }
