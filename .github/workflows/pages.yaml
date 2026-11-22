@@ -1,0 +1,16 @@
+name: Publish Marimo notebooks to GitHub Pages
+on: { push: { branches: [main] } }
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: make export-all
+      - uses: actions/upload-pages-artifact@v5
+        with: { path: pages }
+      - uses: actions/deploy-pages@v5
